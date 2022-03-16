@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import { AUTHENTICATE, LOGOUT } from '../../constants/ReduxConstants';
 
 let timer;
@@ -17,13 +17,13 @@ export const signUp = (email, password) => {
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email,
           password,
-          returnSecureToken: true
-        })
+          returnSecureToken: true,
+        }),
       }
     );
 
@@ -42,9 +42,7 @@ export const signUp = (email, password) => {
 
     dispatch(authenticate(localId, idToken, parseInt(expiresIn) * 1000));
 
-    const expirationDate = new Date(
-      new Date().getTime() + parseInt(expiresIn) * 1000
-    );
+    const expirationDate = new Date(new Date().getTime() + parseInt(expiresIn) * 1000);
 
     saveDataToStorage(idToken, localId, expirationDate);
   };
@@ -57,13 +55,13 @@ export const signIn = (email, password) => {
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email,
           password,
-          returnSecureToken: true
-        })
+          returnSecureToken: true,
+        }),
       }
     );
 
@@ -84,9 +82,7 @@ export const signIn = (email, password) => {
 
     dispatch(authenticate(localId, idToken, parseInt(expiresIn) * 1000));
 
-    const expirationDate = new Date(
-      new Date().getTime() + parseInt(expiresIn) * 1000
-    );
+    const expirationDate = new Date(new Date().getTime() + parseInt(expiresIn) * 1000);
 
     saveDataToStorage(idToken, localId, expirationDate);
   };
@@ -119,7 +115,7 @@ const saveDataToStorage = (token, userId, expirationDate) => {
     JSON.stringify({
       token,
       userId,
-      expiryDate: expirationDate.toISOString()
+      expiryDate: expirationDate.toISOString(),
     })
   );
 };

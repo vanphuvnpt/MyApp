@@ -1,22 +1,20 @@
-import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
-import ShopNavigator from './ShopNavigator';
+import React from 'react';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AuthScreen from '../screens/user/AuthScreen';
+import HomeScreen from '../screens/home/HomeScreen';
+const Stack = createNativeStackNavigator();
 
 const NavigationContainer = () => {
-  const navRef = useRef();
-
-  const isAuth = useSelector((state) => !!state.auth.token);
-
-  useEffect(() => {
-    if (!isAuth) {
-      navRef.current.dispatch(
-        NavigationActions.navigate({ routeName: 'Auth' })
-      );
-    }
-  }, [isAuth]);
-
-  return <ShopNavigator ref={navRef} />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen nam="Login" component={AuthScreen} />
+        <Stack.Screen nam="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 };
 
 export default NavigationContainer;
